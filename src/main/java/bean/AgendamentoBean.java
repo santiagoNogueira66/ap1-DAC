@@ -6,20 +6,22 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.event.RowEditEvent;
+import java.util.List;
+
 import DAO.AgendaDao;
 import entidades.Agenda;
 
 @ManagedBean
 public class AgendamentoBean {
-	
 
 	private Agenda agenda = new Agenda();
 	private List<Agenda> lista;
 	private long totalAgendamentos;
-	
+
+
 	public void salvar() {
 		AgendaDao.salvar(agenda);
-		Agenda agenda = new Agenda();
 	}
 
 	public void excluir(Agenda agenda) {
@@ -27,16 +29,24 @@ public class AgendamentoBean {
 		lista = null;
 	}
 
-	
-	public void editar(Agenda agenda) {
-		AgendaDao.editar(agenda);
+	public void editar(RowEditEvent event) {
+		Agenda angendaEditada = (Agenda)event.getObject();
+		try {
+			AgendaDao.editar(angendaEditada);
+
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "As alterações foram salvas com sucesso."));
+
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro",
+					"Ocorreu um erro ao salvar as alterações: " + e.getMessage()));
+		}
 	}
-	
+
 	public void contar() {
 		totalAgendamentos = AgendaDao.contar();
 	}
 
-	
 	public Agenda getAgenda() {
 		return agenda;
 	}

@@ -1,5 +1,6 @@
 package DAO;
 
+
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -56,11 +57,6 @@ public class AgendaDao {
 		 
 		 return resultado;
 	}
-	public static Agenda buscaPorId(Integer id) {
-		EntityManager em = JPAutil.criarEntityManager();
-		Agenda agenda = em.find(Agenda.class, id);
-		em.close();
-		return agenda;
-	}
+
 }
 	

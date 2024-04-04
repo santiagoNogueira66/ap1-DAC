@@ -1,6 +1,5 @@
 package util;
 
-import javax.management.Query;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -14,6 +13,3 @@ private static EntityManagerFactory emf = Persistence.createEntityManagerFactory
 	}
 	
 }
-
-
-

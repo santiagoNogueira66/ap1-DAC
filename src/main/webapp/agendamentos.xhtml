@@ -11,40 +11,76 @@
 
 </h:head>
 <h:body>
-	<h:form id="formulario">
-		<p:panel header="lista de Agendamentos">
-			<p:link outcome="gerar_agendamento" value="voltar" />
-			<p:dataTable value="#{agendamentoBean.lista}" var="a">
+	<h:form id="form">
+		<p:growl id="msgs" showDetail="true" />
+
+		<div class="card">
+			<p:dataTable var="a" value="#{agendamentoBean.lista}" editable="true"
+				style="margin-bottom:20px">
+
+				<p:ajax event="rowEdit" listener="#{agendamentoBean.editar}"
+					update=":form:msgs" />
 
 				<p:column headerText="paciente">
-					<h:outputText value="#{a.paciente}" />
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{a.paciente}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{a.paciente}" style="width:100%"
+								label="paciente" />
+						</f:facet>
+					</p:cellEditor>
 				</p:column>
 
 				<p:column headerText="medico">
-					<h:outputText value="#{a.medico}" />
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{a.medico}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{a.medico}" style="width:100%"
+								label="medico" />
+						</f:facet>
+					</p:cellEditor>
 				</p:column>
 
 				<p:column headerText="dataHoraConsulta">
-					<h:outputText value="#{a.dataHoraConsulta}" />
-
-					<p:commandButton value="excluir"
-						action="#{agendamentoBean.excluir(a)}" update="formulario"
-						style="margin-left:50px" />
-
-					<p:commandButton value="editar" action="#{agendamentoBean.editar(a)}" 
-						style="margin-left:10px"/>
-
-
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{a.dataHoraConsulta}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:calendar value="#{a.dataHoraConsulta}"
+								pattern="yyyy-MM-dd HH:mm:ss" />
+						</f:facet>
+					</p:cellEditor>
 				</p:column>
+
+				<p:column style="width:6rem">
+					<p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit"
+						saveTitle="Save Row" />
+				</p:column>
+				<p:column style="width:6rem">
+					<p:commandButton value="excluir"
+						action="#{agendamentoBean.excluir(a)}" update="form">
+						<f:setPropertyActionListener target="#{agendamentoBean.agenda}"
+							value="#{a}" />
+					</p:commandButton>
+				</p:column>
+
 			</p:dataTable>
-			<br/><br/>
+
+			<br /> <br />
+			<p:button value="voltar" outcome="gerar_agendamento" />
+			<br /> <br />
 			<p:commandButton value="total agendamentos"
 				action="#{agendamentoBean.contar}" update="totalAgendamentosText" />
-			<br/><br/>
+			<br /> <br />
 			<h:outputText id="totalAgendamentosText"
 				value="Total de Agendamentos: #{agendamentoBean.totalAgendamentos}" />
+		</div>
 
-		</p:panel>
 	</h:form>
 </h:body>
 </html>
