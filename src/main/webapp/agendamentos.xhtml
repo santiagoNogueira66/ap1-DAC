@@ -6,17 +6,44 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
-<h:head><title>lista de agendamentos</title></h:head>
+<h:head>
+	<title>lista de agendamentos</title>
+
+</h:head>
 <h:body>
 	<h:form id="formulario">
 		<p:panel header="lista de Agendamentos">
-		<p:link outcome="gerar_agendamento" value="voltar" />
-		<p:dataTable value="#{AgendamentoBean.listar}" var="a">
-			<p:column headerText="id"><p:outputLabel value="a.id"/></p:column>
-			<p:column headerText="paciente"><p:outputLabel value="a.paciente"/></p:column>
-			<p:column headerText="medico"><p:outputLabel value="a.medico"/></p:column>
-			<p:column headerText="dataHoraConsulta"><p:outputLabel value="a.dataHoraConsulta"/></p:column>
-		</p:dataTable>
+			<p:link outcome="gerar_agendamento" value="voltar" />
+			<p:dataTable value="#{agendamentoBean.lista}" var="a">
+
+				<p:column headerText="paciente">
+					<h:outputText value="#{a.paciente}" />
+				</p:column>
+
+				<p:column headerText="medico">
+					<h:outputText value="#{a.medico}" />
+				</p:column>
+
+				<p:column headerText="dataHoraConsulta">
+					<h:outputText value="#{a.dataHoraConsulta}" />
+
+					<p:commandButton value="excluir"
+						action="#{agendamentoBean.excluir(a)}" update="formulario"
+						style="margin-left:50px" />
+
+					<p:commandButton value="editar" action="#{agendamentoBean.editar(a)}" 
+						style="margin-left:10px"/>
+
+
+				</p:column>
+			</p:dataTable>
+			<br/><br/>
+			<p:commandButton value="total agendamentos"
+				action="#{agendamentoBean.contar}" update="totalAgendamentosText" />
+			<br/><br/>
+			<h:outputText id="totalAgendamentosText"
+				value="Total de Agendamentos: #{agendamentoBean.totalAgendamentos}" />
+
 		</p:panel>
 	</h:form>
 </h:body>

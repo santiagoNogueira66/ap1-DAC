@@ -9,10 +9,9 @@
 <h:head>
 	<meta charset="UTF-8"/>
 	<title>Agendamento de consultas</title>
-	<h:outputStylesheet library="css" name="style.css"/>
 </h:head>
 <h:body>
-	<h:form id="formulario">
+	<h:form id="forms">
 		<p:panel header="Agendamento de consultas">
 			<p:panelGrid columns="2">
 				<p:outputLabel value="Digite o seu nome:" />
@@ -28,17 +27,16 @@
 				</p:selectOneMenu>
 				<p:outputLabel value="selecione a data da consulta" />
 
-				<p:datePicker id="dataConsulta" required="true" minDate="2024-03-29"
+				<p:datePicker id="dataConsulta" required="true" minDate="2024-04-9"
 					maxDate="2024-12-31" label="Data da Consulta" locale="pt"
 					datePattern="dd/MM/yyyy HH:mm" timeOnly="false" showTime="true" 
 					value="#{agendamentoBean.agenda.dataHoraConsulta}"/>
 
 				<p:commandButton value="Salvar" action="#{agendamentoBean.salvar()}"
-					update="formulario" />
+					update="forms" />
 				
-				<p:commandButton value="excluir" action="#{aegndamentoBean.Excluir()}"/>
 				
-				<p:link outcome="agendamentos" value="lista de agendamentos" />
+				<p:link outcome="agendamentos" value="lista de agendamentos" style="margin-left:50px"/>
 			</p:panelGrid>
 		</p:panel>
 	</h:form>
