@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+	<meta charset="UTF-8"/>
+	<title>Agendamento de consultas</title>
+	<h:outputStylesheet library="css" name="style.css"/>
+</h:head>
+<h:body>
+	<h:form id="formulario">
+		<p:panel header="Agendamento de consultas">
+			<p:panelGrid columns="2">
+				<p:outputLabel value="Digite o seu nome:" />
+				<p:inputText value="#{agendamentoBean.agenda.paciente}" />
+				<p:outputLabel value="selecione o médico desejado:" />
+				<p:selectOneMenu value="#{agendamentoBean.agenda.medico}">
+					<f:selectItem itemValue="Gabrielle Rocha Almeida"
+						itemLabel="GABRIELLE ROCHA ALMEIDA" />
+					<f:selectItem itemValue="Felipe Cunha Rocha"
+						itemLabel="FELIPE CUNHA ROCHA" />
+					<f:selectItem itemValue="Nicole Rodrigues Carvalho"
+						itemLabel="NICOLE RODRIGUES DE CARVALHO" />
+				</p:selectOneMenu>
+				<p:outputLabel value="selecione a data da consulta" />
+
+				<p:datePicker id="dataConsulta" required="true" minDate="2024-03-29"
+					maxDate="2024-12-31" label="Data da Consulta" locale="pt"
+					datePattern="dd/MM/yyyy HH:mm" timeOnly="false" showTime="true" 
+					value="#{agendamentoBean.agenda.dataHoraConsulta}"/>
+
+				<p:commandButton value="Salvar" action="#{agendamentoBean.salvar()}"
+					update="formulario" />
+				
+				<p:commandButton value="excluir" action="#{aegndamentoBean.Excluir()}"/>
+				
+				<p:link outcome="agendamentos" value="lista de agendamentos" />
+			</p:panelGrid>
+		</p:panel>
+	</h:form>
+</h:body>
+</html>
