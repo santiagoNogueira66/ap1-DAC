@@ -21,7 +21,12 @@ public class AgendamentoBean {
 
 
 	public void salvar() {
+		 if (existeDuplicata(agenda)) {
+		        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Já existe um agendamento para a mesma data, hora e médico."));
+		        return; 
+		    }
 		AgendaDao.salvar(agenda);
+		agenda = new Agenda();
 	}
 
 	public void excluir(Agenda agenda) {
@@ -30,9 +35,13 @@ public class AgendamentoBean {
 	}
 
 	public void editar(RowEditEvent event) {
-		Agenda angendaEditada = (Agenda)event.getObject();
+		Agenda agendaEditada = (Agenda)event.getObject();
+		 if (existeDuplicata(agendaEditada)) {
+		        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Já existe um agendamento para a mesma data, hora e médico."));
+		        return; 
+		    }
 		try {
-			AgendaDao.editar(angendaEditada);
+			AgendaDao.editar(agendaEditada);
 
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "As alterações foram salvas com sucesso."));
@@ -47,6 +56,17 @@ public class AgendamentoBean {
 		totalAgendamentos = AgendaDao.contar();
 	}
 
+	private boolean existeDuplicata(Agenda agenda) {
+	    List<Agenda> agendamentos = AgendaDao.buscarPorDataHoraEMedico(agenda.getDataHoraConsulta(), agenda.getMedico());
+	    for (Agenda agendamentoExistente : agendamentos) {
+	        if (!agendamentoExistente.getId().equals(agenda.getId())) {
+	        	
+	            return true; 
+	        }
+	    }
+	    return false; 
+	}
+	
 	public Agenda getAgenda() {
 		return agenda;
 	}

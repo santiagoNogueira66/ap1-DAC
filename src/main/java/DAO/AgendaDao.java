@@ -1,10 +1,12 @@
 package DAO;
 
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import entidades.Agenda;
 import util.JPAutil;
@@ -57,6 +59,17 @@ public class AgendaDao {
 		 
 		 return resultado;
 	}
-
-}
+	 public static List<Agenda> buscarPorDataHoraEMedico(Date date, String medico) {
+	        EntityManager em = JPAutil.criarEntityManager();
+	        try {
+	            TypedQuery<Agenda> query = em.createQuery("SELECT a FROM Agenda a WHERE a.dataHoraConsulta = :dataHoraConsulta AND a.medico = :medico", Agenda.class);
+	            query.setParameter("dataHoraConsulta", date);
+	            query.setParameter("medico", medico);
+	            return query.getResultList();
+	        } finally {
+	            em.close();
+	        }
+	    }
+		
+	}
 	
