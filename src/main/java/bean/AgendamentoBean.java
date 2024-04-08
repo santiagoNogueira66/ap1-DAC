@@ -19,27 +19,32 @@ public class AgendamentoBean {
 	private List<Agenda> lista;
 	private long totalAgendamentos;
 
-
 	public void salvar() {
-		 if (existeDuplicata(agenda)) {
-		        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Já existe um agendamento para a mesma data, hora e médico."));
-		        return; 
-		    }
+		if (existeDuplicata(agenda)) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro",
+					"Já existe um agendamento para a mesma data, hora e médico."));
+			return;
+		}
 		AgendaDao.salvar(agenda);
 		agenda = new Agenda();
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Agendamento salvo com sucessso"));
 	}
 
 	public void excluir(Agenda agenda) {
 		AgendaDao.excluir(agenda);
 		lista = null;
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Agendamento excluido com sucesso"));
 	}
 
 	public void editar(RowEditEvent event) {
-		Agenda agendaEditada = (Agenda)event.getObject();
-		 if (existeDuplicata(agendaEditada)) {
-		        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Já existe um agendamento para a mesma data, hora e médico."));
-		        return; 
-		    }
+		Agenda agendaEditada = (Agenda) event.getObject();
+		if (existeDuplicata(agendaEditada)) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro",
+					"Já existe um agendamento para a mesma data, hora e médico."));
+			return;
+		}
 		try {
 			AgendaDao.editar(agendaEditada);
 
@@ -57,16 +62,17 @@ public class AgendamentoBean {
 	}
 
 	private boolean existeDuplicata(Agenda agenda) {
-	    List<Agenda> agendamentos = AgendaDao.buscarPorDataHoraEMedico(agenda.getDataHoraConsulta(), agenda.getMedico());
-	    for (Agenda agendamentoExistente : agendamentos) {
-	        if (!agendamentoExistente.getId().equals(agenda.getId())) {
-	        	
-	            return true; 
-	        }
-	    }
-	    return false; 
+		List<Agenda> agendamentos = AgendaDao.buscarPorDataHoraEMedico(agenda.getDataHoraConsulta(),
+				agenda.getMedico());
+		for (Agenda agendamentoExistente : agendamentos) {
+			if (!agendamentoExistente.getId().equals(agenda.getId())) {
+
+				return true;
+			}
+		}
+		return false;
 	}
-	
+
 	public Agenda getAgenda() {
 		return agenda;
 	}
@@ -89,5 +95,5 @@ public class AgendamentoBean {
 	public void setTotalAgendamentos(long totalAgendamentos) {
 		this.totalAgendamentos = totalAgendamentos;
 	}
-	
+
 }

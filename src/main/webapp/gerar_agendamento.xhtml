@@ -7,11 +7,13 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
-	<meta charset="UTF-8"/>
+	<meta charset="UTF-8" />
 	<title>Agendamento de consultas</title>
 </h:head>
 <h:body>
 	<h:form id="forms">
+		<p:growl id="msgs" showDetail="true" />
+
 		<p:panel header="Agendamento de consultas">
 			<p:panelGrid columns="2">
 				<p:outputLabel value="Digite o seu nome:" />
@@ -29,14 +31,15 @@
 
 				<p:datePicker id="dataConsulta" required="true" minDate="2024-04-9"
 					maxDate="2024-12-31" label="Data da Consulta" locale="pt"
-					datePattern="dd/MM/yyyy HH:mm" timeOnly="false" showTime="true" 
-					value="#{agendamentoBean.agenda.dataHoraConsulta}"/>
+					datePattern="dd/MM/yyyy HH:mm" timeOnly="false" showTime="true"
+					value="#{agendamentoBean.agenda.dataHoraConsulta}" />
 
 				<p:commandButton value="Salvar" action="#{agendamentoBean.salvar()}"
 					update="forms" />
-				
-				
-				<p:link outcome="agendamentos" value="lista de agendamentos" style="margin-left:50px"/>
+
+
+				<p:link outcome="agendamentos" value="lista de agendamentos"
+					style="margin-left:50px" />
 			</p:panelGrid>
 		</p:panel>
 	</h:form>
