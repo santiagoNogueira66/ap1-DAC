@@ -1,9 +1,10 @@
-# ap2-dac
+# ap1-dac
 
 dac (desenvolvimento de aplicações corporativas)
 
-Este trabalho tem por objeto o desenvolvimento de um jogo utilizando JSF, Primefaces e
-Hibernate.
+Este trabalho tem por intuito a criação de um programa para gerar agendamentos de
+consultas, persistindo seus dados em um SGBD e utilizando JSF, Primefaces, Hibernate e
+Postgres.
 
 
 ### Downloads necessários
@@ -12,7 +13,7 @@ Hibernate.
 
 - Tomcat 9: [Baixe o Tomcat 9 aqui](https://tomcat.apache.org/download-90.cgi)
 
-### Configuração no Eclipse
+### Importando o Projeto para o Eclipse
 
 1. Abra o Eclipse.
 2. Clique em "File" > "Import".
